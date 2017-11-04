@@ -111,17 +111,15 @@ let initialState = {
 
   export function postStep (col, num) {
     return function thunk (dispatch)  {
-      console.log("the step")
-
-      // let nextStep = store.getState().lastStep;
-      // if (num > 0)  {
-      //   nextStep[col] += 1;
-      // }
-      // else {
-      //   nextStep[col] -= 1;
-      // }
-      // console.log("the next step", nextStep)
-      // dispatch(addStep(nextStep));
+      let nextStep = store.getState().lastStep;
+      if (num > 0)  {
+        nextStep[col] += 1;
+      }
+      else {
+        nextStep[col] -= 1;
+      }
+      console.log("the next step", nextStep)
+      dispatch(addStep(nextStep));
     }
   }
   export function fetchSteps () {

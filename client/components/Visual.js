@@ -4,8 +4,6 @@ import {fetchEquation} from './index';
 import postStep from '../store/reducer';
 import {connect} from 'react-redux';
 
-
-
 export function Visual (props){
         let leftVariable = [];
         let rightVariable = [];
