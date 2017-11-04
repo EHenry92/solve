@@ -1,21 +1,83 @@
-body {
-  font-family: sans-serif;
+// body {
+//   font-family: sans-serif;
 
-  a {
-    text-decoration: none;
-  }
+//   a {
+//     text-decoration: none;
+//   }
 
-  label {
-    display: block;
-  }
+//   label {
+//     display: block;
+//   }
 
-  nav a {
-    display: inline-block;
-    margin: 1em;
-  }
+//   nav a {
+//     display: inline-block;
+//     margin: 1em;
+//   }
 
-  form div {
-    margin: 1em;
-    display: inline-block;
-  }
+//   form div {
+//     margin: 1em;
+//     display: inline-block;
+//   }
+// }
+html {
+  background-color: white;
+}
+
+#box {
+  display: flex;
+  width: 90vw;
+  flex-direction: row;
+  background-color: purple;
+}
+
+#visual {
+  width:40vw;
+  display: flex;
+  flex-direction: row;
+
+}
+#algebra {
+  width:40vw;
+}
+#singleEquation {
+  background-color: blue;
+}
+
+#controls{
+  display:flex;
+}
+.leftSide {
+ background-image: './plate.jpg';
+ /* background-color:black; */
+ color:white;
+ display:flex;
+ width:20vw;
+ flex-wrap: wrap;
+}
+.rightSide {
+  background-color:white;
+  display:flex;
+  width:20vw;
+  flex-wrap: wrap;
+
+}
+.variable {
+  background-image: 'http://b2b.libbey.com/var/libbey/storage/images/business-to-business-home/expertise/packaging-design/closed-box2/32741-2-eng-US/Closed-Box_reference.jpg';
+  background-color: green;
+  margin: 5px;
+  width:30px;
+  height:30px;
+}
+.constant {
+  background-color: green;
+  margin: 5px;
+  width:30px;
+  height:30px;
+  border-radius:50px;
+}
+table{
+  width:40vw;
+}
+td{
+  width:20vw;
 }

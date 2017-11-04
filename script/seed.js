@@ -9,43 +9,50 @@
  *
  * Now that you've got the main idea, check it out in practice below!
  */
-const db = require('../server/db')
-const {User} = require('../server/db/models')
 
-async function seed () {
-  await db.sync({force: true})
-  console.log('db synced!')
-  // Whoa! Because we `await` the promise that db.sync returns, the next line will not be
-  // executed until that promise resolves!
+'use strict';
+let db = require('../server/db');
+const {Equation} = require('../server/db/models')
+var Promise = require('bluebird');
 
-  const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
-  ])
-  // Wowzers! We can even `await` on the right-hand side of the assignment operator
-  // and store the result that the promise resolves to in a variable! This is nice!
-  console.log(`seeded ${users.length} users`)
-  console.log(`seeded successfully`)
+const list = [
+	{var: 'x', lCo: [4], lConst: [2], rCo: [6], rConst: [-3]},
+	{var: 'y', lCo: [3, 2], lConst: [4], rCo: [8], rConst: [14]},
+	{var: 'x', lCo: [5], lConst: [3], rCo: [2, 4], rConst: [7]}
+];
+
+function generateEquations() {
+    var equations = [];
+    for (var i = 0; i < list.length; i++)  {
+      equations.push(
+        Equation.build(list[i])
+      )
+    }
+    return equations;
+}
+function createEquation () {
+  return Promise.map(generateEquations(), function(equ){
+    return equ.save()
+  });
 }
 
-// Execute the `seed` function
-// `Async` functions always return a promise, so we can use `catch` to handle any errors
-// that might occur inside of `seed`
-seed()
-  .catch(err => {
-    console.error(err.message)
-    console.error(err.stack)
-    process.exitCode = 1
-  })
-  .then(() => {
-    console.log('closing db connection')
-    db.close()
-    console.log('db connection closed')
-  })
+function seed () {
+    return createEquation();
+}
 
-/*
- * note: everything outside of the async function is totally synchronous
- * The console.log below will occur before any of the logs that occur inside
- * of the async function
- */
-console.log('seeding...')
+  console.log('Loading solve database');
+  db.sync({force: true})
+  .then(function () {
+    console.log('Seeding database');
+    return seed();
+  })
+  .then(function () {
+    console.log('Seeding successful');
+  }, function (err) {
+    console.error('Error while seeding');
+    console.error(err.stack);
+  })
+  .finally(function () {
+    db.close();
+    return null;
+  });

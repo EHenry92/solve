@@ -1,7 +1,7 @@
 {
-  "name": "boilermaker",
+  "name": "solvingEquations",
   "version": "1.0.0",
-  "description": "Some boilerplate code to get you started - get shakin'!",
+  "description": "Help solving linear equations",
   "engines": {
     "node": ">= 7.0.0"
   },
@@ -25,7 +25,7 @@
     "body-parser": "^1.16.1",
     "compression": "^1.7.1",
     "connect-session-sequelize": "^4.1.0",
-    "express": "^4.14.1",
+    "express": "^4.16.2",
     "express-session": "^1.15.1",
     "history": "^4.6.3",
     "morgan": "^1.8.1",
