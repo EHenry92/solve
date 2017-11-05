@@ -15,9 +15,17 @@ export class SingleEquation extends Component {
     }
     render ()   {
         const equation = this.props.selected;
-        let expanded;
+        let expanded, warning;
         if (Object.keys(equation).length !== 0)  {
             expanded = expand(equation);
+            let step = this.props.lastStep;
+            console.log(step.lCo + step.lConst)
+            console.log(step.rCo + step.rConst)
+
+            if (step.lCo + step.lConst === step.rCo + step.rConst
+            )
+              {warning = "The equation is unbalanced"}
+              console.log("hereye herege ",warning)
         }
         return (
         <div id="singleEquation">
@@ -25,6 +33,10 @@ export class SingleEquation extends Component {
                 <div>
                     {expanded}
                 </div>
+                <div>Messages:
+                  <span> {warning}
+                    </span>
+                  </div>
                 <Controls
                   id = {this.props.match.params.id}
                 />
@@ -32,7 +44,7 @@ export class SingleEquation extends Component {
             <div>
              <div id="box">
                         <Visual />
-                        {/* <Algebra equation ={equation} /> */}
+                        <Algebra />
                      </div>
 
             </div>
@@ -41,6 +53,6 @@ export class SingleEquation extends Component {
     }
 }
 
-const mapStateToProps = ({selected, steps, lastStep}) => ({selected, steps, lastStep});
+const mapStateToProps = ({equations, steps}) => ({selected: equations.selected, steps: steps.list, lastStep: steps.lastStep});
 const mapDispatchToProps = {fetchEquation, postStep};
 export default connect(mapStateToProps, mapDispatchToProps)(SingleEquation);

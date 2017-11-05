@@ -4,7 +4,7 @@
  * having to figure out which file they belong to!
  */
 export {default as Main} from './main';
-export {fetchEquations, postStep, fetchEquation} from '../store/reducer';
+export * from '../store/index.js'
 export {Visual} from './Visual';
 export {Algebra} from './Algebra';
 export {Controls} from './Controls';

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import store from '../store';
 import {fetchEquation} from './index';
 import postStep from '../store/reducer';
 import {connect} from 'react-redux';
@@ -53,6 +52,6 @@ export function Visual (props){
     }
 }
 
-const mapStateToProps = ({selected, steps, lastStep}) => ({equation: lastStep, steps, selected});
+const mapStateToProps = ({equations, steps}) => ({equation: steps.lastStep, steps: steps.list, selected: equations.selected});
 const mapDispatchToProps = {fetchEquation, postStep};
 export default connect(mapStateToProps, mapDispatchToProps)(Visual);

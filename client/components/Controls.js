@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import store from '../store';
 import {connect} from 'react-redux';
-import {fetchEquation, postStep} from '../store/reducer';
+import {fetchEquation, postStep, createStep} from './index';
 
 
 export class Controls extends Component{
@@ -9,11 +8,15 @@ export class Controls extends Component{
       super(props);
       this.variableClick = this.variableClick.bind(this);
       this.constClick = this.constClick.bind(this)
+      this.transform = '';
     }
     componentWillMount()    {
       const eqId = this.props.id;
       this.props.fetchEquation(eqId);
+      this.props.createStep(eqId);
+
     }
+
 
     variableClick(evt)   {
       evt.preventDefault();
@@ -40,9 +43,9 @@ export class Controls extends Component{
       const dir = evt.target.value;
       switch (dir) {
           case 'addConstRight':
-              return this.props.postStep('rConst', 1);
+              return this.props.postStep('rConst', 'add, 1');
           case 'subConstRight':
-              return this.props.postStep('rConst', -1);
+              return this.props.postStep('rConst', 'sub', 1);
           case 'addConstLeft':
               return this.props.postStep('lConst', 1);
           case 'subConstLeft':
@@ -118,6 +121,19 @@ export class Controls extends Component{
                             >-</button>
                     </td>
                   </tr>
+                  <tr>
+                    <td>
+                      <button>X
+                      </button>
+                      <button>/
+                      </button>
+                      {this.transform ?
+                        <input />
+                        :
+                        <div />
+                      }
+                    </td>
+                  </tr>
           </tbody>
       </table>
           </div>
@@ -130,6 +146,6 @@ export class Controls extends Component{
   }
 }
 
-const mapStateToProps = ({selected, lastStep}) => ({equation: selected, lastStep});
-const mapDispatchToProps = {fetchEquation, postStep};
+const mapStateToProps = ({equations, steps}) => ({equation: equations.selected, lastStep: steps.lastStep});
+const mapDispatchToProps = {fetchEquation, postStep, createStep};
 export default connect(mapStateToProps, mapDispatchToProps)(Controls);
