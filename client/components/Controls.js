@@ -13,9 +13,15 @@ export class Controls extends Component{
       this.resetHandler = this.resetHandler.bind(this);
     }
     componentWillMount()  {
+      $(document).ready(function() {
+        $('select').material_select();
+      });
       const eqId = this.props.id;
       this.props.fetchEquation(eqId);
       this.props.createStep(eqId);
+      $(document).ready(function() {
+        $('select').material_select();
+      });
     }
     singleClick(evt)  {
       evt.preventDefault();
@@ -120,23 +126,27 @@ export class Controls extends Component{
                       <form
                           name= "left"
                           onSubmit = {this.submitHandler}>
-                        <label > multiply
+
                           <input
+                            id="multiplyLeft"
                             type="radio"
                             name="multiplyOrDivide"
                             value = "multiply"
                             defaultChecked = {true}
                             onChange = {this.changeHandler}
                           />
+                          <label for="multiplyLeft" > multiply
                         </label>
-                        <label> divide
+
                           <input
+                            id="divideLeft"
                             type="radio"
                             name="multiplyOrDivide"
                             value="divide"
                             defaultChecked = {false}
                             onChange = {this.changeHandler}
                           />
+                          <label for="divideLeft"> divide
                         </label>
                         <label>
                           <input
@@ -151,23 +161,27 @@ export class Controls extends Component{
                     <form
                           name= "right"
                           onSubmit = {this.submitHandler}>
-                        <label > multiply
+
                           <input
+                            id="multiplyRight"
                             type="radio"
                             name="multiplyOrDivide"
                             value = "multiply"
                             defaultChecked = {true}
                             onChange = {this.changeHandler}
                           />
+                           <label for="multiplyRight"> multiply
                         </label>
-                        <label> divide
+
                           <input
+                            id="divideRight"
                             type="radio"
                             name="multiplyOrDivide"
                             value="divide"
                             defaultChecked = {false}
                             onChange = {this.changeHandler}
                           />
+                          <label for="divideRight"> divide
                         </label>
                         <label>
                           <input
