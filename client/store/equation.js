@@ -1,19 +1,14 @@
-import {firstStep} from './step.js';
 import axios from 'axios';
-
 let initialState = {
   list: [],
-  selected: {}
+  selected: {},
 }
 
-//Action Types
 const GET_EQUATIONS = 'GET_EQUATIONS';
 const SET_EQUATION = 'SET_EQUATION';
 const ADD_EQUATION = 'ADD_EQUATION';
 const DELETE_EQUATION = 'DELETE_EQUATION';
 
-
-//Action Creators
 export function getEquations (equations)  {
   const action = {type: GET_EQUATIONS, equations};
   return action;
@@ -31,7 +26,6 @@ export function delEquation (id) {
   return action;
 }
 
-//Thunks
 export function fetchEquations () {
   return function thunk(dispatch) {
     axios.get('/api/equations')
@@ -42,14 +36,12 @@ export function fetchEquations () {
     .catch(err => err)
   }
 }
-
 export function fetchEquation(id) {
   return function thunk(dispatch) {
     axios.get(`/api/equations/${id}`)
     .then(res => res.data)
     .then(equation => {
       dispatch(setEquation(equation))
-      dispatch(firstStep(equation))
     })
     .catch(err => err)
   }
@@ -77,26 +69,25 @@ export function destroyEquation (id) {
   }
 }
 
-
-//Reducer
-export default function reducer(state = initialState, action) {
+export default function reducer (state = initialState, action)  {
   switch (action.type) {
     case GET_EQUATIONS:
-      return Object.assign({}, state, {list: action.equations});
-    case SET_EQUATION:
-      return Object.assign({}, state, {selected: action.equation});
-    case ADD_EQUATION:
-      return Object.assign({}, state, {
-          list: [...state.list, action.equation],
-          selected: action.equation
-        });
-    case DELETE_EQUATION:
-        return Object.assign({}, state, {
-          list: state.list.filter(equation => equation.id !== action.id),
-          selected: {}
-        })
-    default:
-      return state
+    return Object.assign({}, state, {
+      list: action.equations
+    })
+  case SET_EQUATION:
+    return Object.assign({}, state, {
+      selected: action.equation,
+    })
+  case ADD_EQUATION:
+    return Object.assign({}, state, {
+      list: [...state.list, action.equation]
+    })
+  case DELETE_EQUATION:
+    return Object.assign({}, state, {
+      list: state.list.filter(equ => equ.id !== action.id)
+    })
+  default:
+    return state;
   }
 }
-

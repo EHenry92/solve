@@ -15,16 +15,20 @@ export class SingleEquation extends Component {
     }
     render ()   {
         const equation = this.props.selected;
-        let expanded;
+        let expanded, warning;
         if (Object.keys(equation).length !== 0)  {
             expanded = expand(equation);
         }
         return (
         <div id="singleEquation">
             <div>
-                <div>
-                    {expanded}
+                <div className = "center-align">
+                   <h3> {expanded} </h3>
                 </div>
+                <div>Messages:
+                  <span> {warning}
+                    </span>
+                  </div>
                 <Controls
                   id = {this.props.match.params.id}
                 />
@@ -32,7 +36,7 @@ export class SingleEquation extends Component {
             <div>
              <div id="box">
                         <Visual />
-                        {/* <Algebra equation ={equation} /> */}
+                        <Algebra />
                      </div>
 
             </div>
@@ -41,6 +45,6 @@ export class SingleEquation extends Component {
     }
 }
 
-const mapStateToProps = ({selected, steps, lastStep}) => ({selected, steps, lastStep});
+const mapStateToProps = ({equations, steps}) => ({selected: equations.selected, steps: steps.list, lastStep: steps.lastStep});
 const mapDispatchToProps = {fetchEquation, postStep};
 export default connect(mapStateToProps, mapDispatchToProps)(SingleEquation);

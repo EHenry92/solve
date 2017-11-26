@@ -1,42 +1,35 @@
 import React, {Component} from 'react';
-import store from '../store';
 import { NavLink } from 'react-router-dom';
 import {fetchEquations} from './index';
 import expand from '../../public/function.js';
 import {connect} from 'react-redux';
 
 
-export default class Equations extends Component {
-    constructor (props) {
-        super(props);
-        this.state = store.getState();
-    }
+export class Equations extends Component {
     componentWillMount()  {
-      store.dispatch(fetchEquations());
-      this.unsubscribe = store.subscribe(() => this.setState(store.getState()));
-    }
-    componentWillUnmount () {
-      this.unsubscribe();
+      this.props.fetchEquations();
     }
 
     render ()   {
-      const info = this.state.equations;
         return (
             <div>
-              <ul>
+              <ul className="collection">
               {
-                info.map(equation => {
+                this.props.equations.map(equation => {
                   return (
-                      <li key={equation.id}>
-                      <span><NavLink to={`equation/${equation.id}`}>*</NavLink></span>
-                      <span>{expand(equation)}</span>
+                      <li className = "collection-item"key={equation.id}>
+                      <NavLink to={`equation/${equation.id}`}>
+                      {expand(equation)}</NavLink>
                       </li>
                   )
                 })
               }
               </ul>
             </div>
-
         )
     }
 }
+
+const mapStateToProps = ({equations}) => ({equations: equations.list});
+const mapDispatchToProps = {fetchEquations};
+export default connect(mapStateToProps, mapDispatchToProps)(Equations);
