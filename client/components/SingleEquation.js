@@ -18,20 +18,12 @@ export class SingleEquation extends Component {
         let expanded, warning;
         if (Object.keys(equation).length !== 0)  {
             expanded = expand(equation);
-            let step = this.props.lastStep;
-            console.log(step.lCo + step.lConst)
-            console.log(step.rCo + step.rConst)
-
-            if (step.lCo + step.lConst === step.rCo + step.rConst
-            )
-              {warning = "The equation is unbalanced"}
-              console.log("hereye herege ",warning)
         }
         return (
         <div id="singleEquation">
             <div>
-                <div>
-                    {expanded}
+                <div className = "center-align">
+                   <h3> {expanded} </h3>
                 </div>
                 <div>Messages:
                   <span> {warning}

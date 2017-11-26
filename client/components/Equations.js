@@ -13,13 +13,13 @@ export class Equations extends Component {
     render ()   {
         return (
             <div>
-              <ul>
+              <ul className="collection">
               {
                 this.props.equations.map(equation => {
                   return (
-                      <li key={equation.id}>
-                      <span><NavLink to={`equation/${equation.id}`}>*</NavLink></span>
-                      <span>{expand(equation)}</span>
+                      <li className = "collection-item"key={equation.id}>
+                      <NavLink to={`equation/${equation.id}`}>
+                      {expand(equation)}</NavLink>
                       </li>
                   )
                 })
