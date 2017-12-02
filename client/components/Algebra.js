@@ -5,46 +5,101 @@ import {connect} from 'react-redux';
 export function Algebra (props){
         return (
         <div id="algebra">
+          <table>
+            <tbody>
                 {
-                  props.steps.map((step, idx) => {
+                  props.steps.map((step) => {
                   return (
-                    <div key={'step'+idx}> {displayStep(step)}
-                      </div>
+                        // {displayStep(step)}
+                        <tr key={step.id}>
+                        {
+                          step.lCo !== 0 &&
+                          <td>{step.lCo + step.var}</td>
+                        }
+                                                {
+                          step.lConst !== 0 &&
+                            <td> + </td>
+                        }
+                        {
+                          step.lConst !== 0 &&
+                            <td>{step.lConst}</td>
+                        }
+                        <td>  =  </td>
+                        {
+                          step.rCo !== 0 &&
+                            <td>{step.rCo + step.var}</td>
+                        }
+                        {
+                          step.rConst !== 0 &&
+                            <td> + </td>
+                        }
+                                                {
+                          step.rConst !== 0 &&
+                            <td>{step.rConst}</td>
+                        }
+                        </tr>
+
                   )
                 })
               }
+            </tbody>
+          </table>
         </div>
         )
-    function displayStep(step)  {
-      return (
-        <div>
-          {
-            step.lCo !== 0 &&
-            <span>{step.lCo + step.var}</span>
-          }
-          {
-            step.lConst !== 0 &&
-            <span>
-              <span> + </span>
-              <span>{step.lConst}</span>
-            </span>
-          }
-          <span>  =  </span>
-          {
-            step.rCo !== 0 &&
-              <span>{step.rCo + step.var}</span>
-          }
-          {
-            step.rConst !== 0 &&
-            <span>
-              <span> + </span>
-              <span>{step.rConst}</span>
-            </span>
-          }
-          </div>
-      )
-
-    }
+    // function displayStep(step)  {
+    //   return (
+    //     // <div>
+    //     //   {
+    //     //     step.lCo !== 0 &&
+    //     //     <span>{step.lCo + step.var}</span>
+    //     //   }
+    //     //   {
+    //     //     step.lConst !== 0 &&
+    //     //     <span>
+    //     //       <span> + </span>
+    //     //       <span>{step.lConst}</span>
+    //     //     </span>
+    //     //   }
+    //     //   <span>  =  </span>
+    //     //   {
+    //     //     step.rCo !== 0 &&
+    //     //       <span>{step.rCo + step.var}</span>
+    //     //   }
+    //     //   {
+    //     //     step.rConst !== 0 &&
+    //     //     <span>
+    //     //       <span> + </span>
+    //     //       <span>{step.rConst}</span>
+    //     //     </span>
+    //     //   }
+    //     //   </div>
+    //     <tr>
+    //     {
+    //       step.lCo !== 0 &&
+    //       <td>{step.lCo + step.var}</td>
+    //     }
+    //     {
+    //       step.lConst !== 0 &&
+    //       <td>
+    //         <td> + </td>
+    //         <td>{step.lConst}</td>
+    //       </td>
+    //     }
+    //     <td>  =  </td>
+    //     {
+    //       step.rCo !== 0 &&
+    //         <td>{step.rCo + step.var}</td>
+    //     }
+    //     {
+    //       step.rConst !== 0 &&
+    //       <td>
+    //         <td> + </td>
+    //         <td>{step.rConst}</td>
+    //       </td>
+    //     }
+    //     </tr>
+    //   )
+    // }
 }
 const mapStateToProps = ({ steps}) => ({lastStep: steps.lastStep, steps: steps.list});
 const mapDispatchToProps = {fetchSteps};

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { NavLink } from 'react-router-dom';
 import {fetchEquations} from './index';
-import expand from '../../public/function.js';
+import {expand} from '../../public/function.js';
 import {connect} from 'react-redux';
 
 

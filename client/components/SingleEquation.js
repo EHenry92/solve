@@ -4,15 +4,15 @@ import postStep from '../store/reducer';
 import Controls from './Controls';
 import Visual from './Visual';
 import Algebra from './Algebra';
-import expand from '../../public/function.js';
+import {expand} from '../../public/function.js';
 import {connect} from 'react-redux';
 
 export class SingleEquation extends Component {
 
-    componentWillMount()    {
-        const eqId = this.props.match.params.id;
-        this.props.fetchEquation(eqId);
-    }
+    // componentWillMount()    {
+    //     const eqId = this.props.match.params.id;
+    //     this.props.fetchEquation(eqId);
+    // }
     render ()   {
         const equation = this.props.selected;
         let expanded, warning;

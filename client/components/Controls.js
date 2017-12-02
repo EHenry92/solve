@@ -13,15 +13,15 @@ export class Controls extends Component{
       this.resetHandler = this.resetHandler.bind(this);
     }
     componentWillMount()  {
-      $(document).ready(function() {
-        $('select').material_select();
-      });
+    //   $(document).ready(function() {
+    //     $('select').material_select();
+    //   });
       const eqId = this.props.id;
       this.props.fetchEquation(eqId);
       this.props.createStep(eqId);
-      $(document).ready(function() {
-        $('select').material_select();
-      });
+    //   $(document).ready(function() {
+    //     $('select').material_select();
+    //   });
     }
     singleClick(evt)  {
       evt.preventDefault();
@@ -135,7 +135,7 @@ export class Controls extends Component{
                             defaultChecked = {true}
                             onChange = {this.changeHandler}
                           />
-                          <label for="multiplyLeft" > multiply
+                          <label htmlFor="multiplyLeft" > multiply
                         </label>
 
                           <input
@@ -146,7 +146,7 @@ export class Controls extends Component{
                             defaultChecked = {false}
                             onChange = {this.changeHandler}
                           />
-                          <label for="divideLeft"> divide
+                          <label htmlFor="divideLeft"> divide
                         </label>
                         <label>
                           <input
@@ -170,7 +170,7 @@ export class Controls extends Component{
                             defaultChecked = {true}
                             onChange = {this.changeHandler}
                           />
-                           <label for="multiplyRight"> multiply
+                           <label htmlFor="multiplyRight"> multiply
                         </label>
 
                           <input
@@ -181,7 +181,7 @@ export class Controls extends Component{
                             defaultChecked = {false}
                             onChange = {this.changeHandler}
                           />
-                          <label for="divideRight"> divide
+                          <label htmlFor="divideRight"> divide
                         </label>
                         <label>
                           <input

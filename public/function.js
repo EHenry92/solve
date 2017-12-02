@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-export default function expand (equation)  {
+export function expand (equation)  {
   let sign = ' ';
   const space = ' ';
   return (
