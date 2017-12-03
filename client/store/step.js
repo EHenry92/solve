@@ -25,7 +25,7 @@ export function createStep (id) {
     .then(equation => {
       //Add the reduced equation as the first step
       let step = {};
-      step.id = equation.id;
+      step.id = 1;
       step.var = equation.var;
       step.lCo = equation.lCo.reduce(function (acc, el) {
         return acc + el;
@@ -47,27 +47,40 @@ export function createStep (id) {
 
 export function postStep (pos, operation, num) {
   return function thunk (dispatch)  {
-    let nextStep = Object.assign({}, store.getState().steps.lastStep);
-    if (operation === 'add') {nextStep[pos] += 1;}
-    else if (operation === 'sub') {nextStep[pos] -= 1;}
+    let nextStep = Object.assign({}, store.getState().steps.lastStep, {pos, operation});
+    nextStep.id += 1;
+    if (operation === 'add') {
+        nextStep[pos] += 1;
+        nextStep.change = 1;
+      }
+    else if (operation === 'sub') {
+        nextStep[pos] -= 1;
+        nextStep.change = -1
+    }
     else if (operation === 'multiply') {
       if (pos === 'left') {
-        nextStep.lCo *= num
-        nextStep.lConst *= num
+        nextStep.lCo *= num;
+        nextStep.lConst *= num;
+        nextStep.change = num;
       }
       else {
-        nextStep.rCo *= num
-        nextStep.rConst *= num
+        nextStep.rCo *= num;
+        nextStep.rConst *= num;
+        nextStep.change = num;
       }
     }
     else if (operation == 'divide') {
       if (pos === 'left') {
-        nextStep.lCo /= num
-        nextStep.lConst /= num
+        nextStep.lCo /= num;
+        nextStep.lConst /= num;
+        nextStep.change = num;
+
       }
       else {
-        nextStep.rCo /= num
-        nextStep.rConst /= num
+        nextStep.rCo /= num;
+        nextStep.rConst /= num;
+        nextStep.change = num;
+
       }
     }
     dispatch(addStep(nextStep));
@@ -100,7 +113,7 @@ export default function reducer (state = initialState, action)  {
       })
     case FIRST_STEP:
       return Object.assign({}, state.steps, {
-        list: [...action.step],
+        list: [...[], action.step],
         lastStep: action.step
       })
     case GET_LAST_STEP:

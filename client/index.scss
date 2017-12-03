@@ -6,17 +6,33 @@ html {
   display: flex;
   width: 90vw;
   flex-direction: row;
-  background-color: purple;
 }
 
 #visual {
-  width:40vw;
+  width:50vw;
   display: flex;
   flex-direction: row;
-
+}
+.leftVis{
+  width: 20vw !important;
+}
+.rightVis{
+  width: 20vw !important;
+}
+.eq{
+  width:4vw !important;
 }
 #algebra {
-  width:40vw;
+  width:30vw;
+  border-width: 4px;
+  border-style: solid;
+  font-size: 20px;
+  table{
+    width:30vw;
+  }
+  td{
+    // width:20vw;
+  }
 }
 #singleEquation {
   // background-color: blue;
@@ -54,9 +70,4 @@ html {
   height:30px;
   border-radius:50px;
 }
-table{
-  width:40vw;
-}
-td{
-  width:20vw;
-}
+
