@@ -6,12 +6,14 @@ export function Algebra (props){
         return (
         <div id="algebra">
           <table>
-            <tbody>
+            {/* <tbody> */}
                 {
                   props.steps.map((step) => {
                   return (
                         // {displayStep(step)}
-                        <tr key={step.id}>
+                        <tbody key={step.id}>
+                        {showAction(step.pos, step.operation, step.change, step.var)}
+                        <tr>
                         {
                           step.lCo !== 0 &&
                           <td>{step.lCo + step.var}</td>
@@ -38,14 +40,70 @@ export function Algebra (props){
                             <td>{step.rConst}</td>
                         }
                         </tr>
+                        </tbody>
+
 
                   )
                 })
               }
-            </tbody>
+            {/* </tbody> */}
           </table>
         </div>
         )
+        function showAction (position, operation, value, variable ) {
+          let sign;
+          switch (operation) {
+            case 'multiply':
+            case 'divide':
+            sign = operation == 'multiply' ? '* ' : '/ ';
+            return (
+              <tr style={{borderBottom: '2'}}>
+                <td />
+                <td />
+                <td> {sign}{value}</td>
+                <td />
+                <td />
+                <td />
+                <td> {sign}{value}</td>
+              </tr>
+            )
+            case 'add':
+            case 'sub':
+            sign = operation == 'add'  && '+ ';
+            return (
+              <tr style={{borderBottom: '2'}}>
+              {
+                position == 'lCo' ?
+                    <td>{sign}{value}{variable}</td>
+                    :
+                    <td/>
+              }
+                <td />
+                {
+                position == 'lConst' ?
+                    <td>{sign}{value}</td>
+                    :
+                    <td/>
+              }
+                <td />
+                {
+                position == 'rCo' ?
+                    <td>{sign}{value}{variable}</td>
+                    :
+                    <td/>
+              }
+                <td />
+                {
+                position == 'rConst' ?
+                    <td>{sign}{value}</td>
+                    :
+                    <td/>
+              }
+              </tr>
+            )
+          }
+
+        }
     // function displayStep(step)  {
     //   return (
     //     // <div>

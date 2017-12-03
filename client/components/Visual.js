@@ -9,24 +9,29 @@ export function Visual (props){
         let leftConstant = [];
         let rightConstant = [];
         return (
-        <div id="visual">
-            <div className="leftSide">
+        <table id="visual">
+          <tbody>
+            <tr>
+            <td className="leftVis leftSide">
             {
                 visualize(props.equation.lCo, 'variable', leftVariable, props.equation.var)
             }
             {
                 visualize(props.equation.lConst, 'constant', leftConstant)
             }
-            </div>
-            <div className="rightSide">
+            </td>
+            <td className="eq"> = </td>
+            <td className="rightVis rightSide">
             {
                 visualize(props.equation.rCo, 'variable', rightVariable, props.equation.var)
             }
             {
                 visualize(props.equation.rConst, 'constant', rightConstant)
             }
-            </div>
-        </div>
+            </td>
+            </tr>
+          </tbody>
+        </table>
         )
 
 

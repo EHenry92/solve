@@ -38,8 +38,6 @@ export class Controls extends Component{
     }
     changeHandler(evt)  {
       evt.preventDefault();
-            console.log('the change')
-
       if (this.operation === 'multiply') {this.operation = 'divide'}
       else {this.operation = 'multiply'}
     }
@@ -55,17 +53,21 @@ export class Controls extends Component{
           <table>
           <thead>
               <tr >
-              <th className = "right-align">Equation</th>
-              <th className = "left-align">Controls</th>
+              <th className = "leftVis right-align">Equation</th>
+              <th className="eq"/>
+              <th className = "rightVis left-align">Controls</th>
+              {/* <th/>
+              <th/> */}
               </tr>
               <tr>
-              <th className = "center-align">Left Expression</th>
-              <th className = "center-align">Right Expression</th>
+              <th className = "leftVis center-align">Left Expression</th>
+              <th className="eq"> = </th>
+              <th className = "rightVis center-align">Right Expression</th>
               </tr>
           </thead>
               <tbody>
                   <tr>
-                    <td className = "center-align">
+                    <td className = "leftVis center-align">
                       <button
                           className="waves-effect waves-light #2196f3 blue"
                           onClick={this.singleClick}
@@ -78,7 +80,8 @@ export class Controls extends Component{
                           value={'sublCo'}
                           >-{this.props.equation.var}</button>
                     </td>
-                    <td className = "center-align">
+                    <td className="eq" />
+                    <td className = "rightVis center-align">
                       <button
                           className="waves-effect waves-light #2196f3 blue"
                           onClick={this.singleClick}
@@ -93,7 +96,7 @@ export class Controls extends Component{
                     </td>
                   </tr>
                   <tr>
-                    <td className = "center-align">
+                    <td className = "leftVis center-align">
                         <button
                             className="waves-effect waves-light #2196f3 blue"
                             onClick={this.singleClick}
@@ -106,7 +109,8 @@ export class Controls extends Component{
                             value={'sublConst'}
                             >-1</button>
                     </td>
-                    <td className = "center-align">
+                    <td className="eq" />
+                    <td className = "rightVis center-align">
 
                         <button
                             className="waves-effect waves-light #2196f3 blue"
@@ -122,7 +126,7 @@ export class Controls extends Component{
                     </td>
                   </tr>
                   <tr>
-                    <td className = "center-align">
+                    <td className = "leftVis center-align">
                       <form
                           name= "left"
                           onSubmit = {this.submitHandler}>
@@ -157,7 +161,8 @@ export class Controls extends Component{
                       <button>Go</button>
                       </form>
                     </td>
-                    <td className = "center-align">
+                    <td className="eq" />
+                    <td className = "rightVis center-align">
                     <form
                           name= "right"
                           onSubmit = {this.submitHandler}>
