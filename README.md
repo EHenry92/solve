@@ -1,7 +1,8 @@
 Solve
 A virtual tool to assist in solving multi-step linear equations. Users are able to observe how the equation is effected by performing actions on the visual representations
 
-Getting Started To use this Solve, you'll need to take the following steps:
+Getting Started
+To use this Solve, you'll need to take the following steps:
 
     Don't fork or clone this repo! Instead, create a new, empty directory on your machine and git init (or create an empty repo on Github and clone it to your local machine)
     Run the following commands:
@@ -55,6 +56,12 @@ When you're ready to deploy
 
 Now, you should be deployed!
 
-Built With: PostgreSQL- Database management system Sequelize - React- JavaScript interface library Amazon Web Services- Image hosting service Express - Data Driven Documents (D3) - library for visualizing data Materalize - CSS framework Sockets - JavaScript library for realtime applications
+Built With:
+  PostgreSQL- Database management system
+  Sequelize -
+  React- JavaScript interface library
+  Express -
+  Materalize - CSS framework
 
-Author: Evlis Henry
+Solve Developer:
+  Evlis Henry
