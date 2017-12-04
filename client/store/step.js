@@ -50,38 +50,28 @@ export function postStep (pos, operation, num) {
     let nextStep = Object.assign({}, store.getState().steps.lastStep, {pos, operation});
     nextStep.id += 1;
     if (operation === 'add') {
-        nextStep[pos] += 1;
+        nextStep['l' + pos] += 1;
+        nextStep['r' + pos] += 1;
         nextStep.change = 1;
       }
     else if (operation === 'sub') {
-        nextStep[pos] -= 1;
+      nextStep['l' + pos] -= 1;
+      nextStep['r' + pos] -= 1;
         nextStep.change = -1
     }
     else if (operation === 'multiply') {
-      if (pos === 'left') {
         nextStep.lCo *= num;
         nextStep.lConst *= num;
-        nextStep.change = num;
-      }
-      else {
         nextStep.rCo *= num;
         nextStep.rConst *= num;
         nextStep.change = num;
-      }
     }
     else if (operation == 'divide') {
-      if (pos === 'left') {
         nextStep.lCo /= num;
         nextStep.lConst /= num;
-        nextStep.change = num;
-
-      }
-      else {
         nextStep.rCo /= num;
         nextStep.rConst /= num;
         nextStep.change = num;
-
-      }
     }
     dispatch(addStep(nextStep));
   }

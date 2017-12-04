@@ -6,7 +6,13 @@ import {fetchEquation, postStep, createStep, destroySteps} from './index';
 export class Controls extends Component{
     constructor (props) {
       super(props);
-      this.operation = 'multiply';
+      this.state = {
+       operation: 'multiply',
+       leftSide: false,
+       rightSide: false,
+       mulOrDiv: false
+      }
+      this.preserveBalance = this.preserveBalance.bind(this);
       this.singleClick = this.singleClick.bind(this);
       this.submitHandler = this.submitHandler.bind(this);
       this.changeHandler = this.changeHandler.bind(this);
@@ -27,7 +33,9 @@ export class Controls extends Component{
       evt.preventDefault();
       const operation = evt.target.value.slice(0, 3);
       const column = evt.target.value.slice(3);
-      this.props.postStep(column, operation, 1)
+      const side = evt.target.name;
+      this.preserveBalance(side, operation, 1, column);
+
     }
     submitHandler(evt)  {
       evt.preventDefault();
@@ -38,168 +46,165 @@ export class Controls extends Component{
     }
     changeHandler(evt)  {
       evt.preventDefault();
-      if (this.operation === 'multiply') {this.operation = 'divide'}
-      else {this.operation = 'multiply'}
+      if (this.state.operation === 'multiply') {
+        this.setState({operation: 'divide'})
+      }
+      else {
+        this.setState({operation: 'multiply'})}
     }
     resetHandler(evt) {
       evt.preventDefault();
       this.props.createStep(this.props.id);
     }
+    preserveBalance(side, operation, amount, column) {
+      let buttons = document.getElementsByClassName(side + 'Btn');
+      for (var i = 0; i < buttons.length; i++) {
+        buttons[i].disabled = true;
+      }
+      let sendStep = () => {
+        if (this.state.leftSide && this.state.rightSide) {
+          this.props.postStep(column, operation, amount);
+          this.setState({leftSide: true, rightSide: true }, () => {
+            document.getElementsByClassName('leftBtn rightBtn')
+          })
+        }
+      }
+      side == 'left' ? this.setState({leftSide: true, mulOrDiv: true}, sendStep) : this.setState({rightSide: true, mulOrDiv: true}, sendStep)
 
+    }
     render () {
       return (
       <div id="controls">
           <div>
-          <table>
-          <thead>
-              <tr >
-              <th className = "leftVis right-align">Equation</th>
-              <th className="eq"/>
-              <th className = "rightVis left-align">Controls</th>
-              {/* <th/>
-              <th/> */}
-              </tr>
-              <tr>
-              <th className = "leftVis center-align">Left Expression</th>
-              <th className="eq"> = </th>
-              <th className = "rightVis center-align">Right Expression</th>
-              </tr>
-          </thead>
+            <table>
               <tbody>
-                  <tr>
-                    <td className = "leftVis center-align">
-                      <button
-                          className="waves-effect waves-light #2196f3 blue"
-                          onClick={this.singleClick}
-                          value={'addlCo'}
-                          >+{this.props.equation.var}</button>
-                          <span>Variable:</span>
-                      <button
-                          className="waves-effect waves-light #2196f3 blue"
-                          onClick={this.singleClick}
-                          value={'sublCo'}
-                          >-{this.props.equation.var}</button>
-                    </td>
-                    <td className="eq" />
-                    <td className = "rightVis center-align">
-                      <button
-                          className="waves-effect waves-light #2196f3 blue"
-                          onClick={this.singleClick}
-                          value={'addrCo'}
-                          >+{this.props.equation.var}</button>
-                          <span>Variable:</span>
-                      <button
-                          className="waves-effect waves-light #2196f3 blue"
-                          onClick={this.singleClick}
-                          value={'subrCo'}
-                          >-{this.props.equation.var}</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className = "leftVis center-align">
-                        <button
-                            className="waves-effect waves-light #2196f3 blue"
-                            onClick={this.singleClick}
-                            value={'addlConst'}
-                            >+1</button>
-                            <span>Constant:</span>
-                        <button
-                            className="waves-effect waves-light #2196f3 blue"
-                            onClick={this.singleClick}
-                            value={'sublConst'}
-                            >-1</button>
-                    </td>
-                    <td className="eq" />
-                    <td className = "rightVis center-align">
+                <tr>
+                <th>Equation Controls</th>
+                </tr>
+                <tr>
+                <td style={{alignContent: 'center'}}>
+                  <form
+                      name= "left"
+                      onSubmit = {this.submitHandler}>
 
-                        <button
-                            className="waves-effect waves-light #2196f3 blue"
-                            onClick={this.singleClick}
-                            value={'addrConst'}
-                            >+1</button>
-                            <span>Constant:</span>
-                        <button
-                          className="waves-effect waves-light #2196f3 blue"
-                            onClick={this.singleClick}
-                            value={'subrConst'}
-                            >-1</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className = "leftVis center-align">
-                      <form
-                          name= "left"
-                          onSubmit = {this.submitHandler}>
+                      <input
+                        id="multiplyLeft"
+                        type="radio"
+                        name="multiplyOrDivide"
+                        value = "multiply"
+                        defaultChecked = {true}
+                        onChange = {this.changeHandler}
+                      />
+                      <label htmlFor="multiplyLeft" > multiply
+                    </label>
 
-                          <input
-                            id="multiplyLeft"
-                            type="radio"
-                            name="multiplyOrDivide"
-                            value = "multiply"
-                            defaultChecked = {true}
-                            onChange = {this.changeHandler}
-                          />
-                          <label htmlFor="multiplyLeft" > multiply
-                        </label>
+                      <input
+                        id="divideLeft"
+                        type="radio"
+                        name="multiplyOrDivide"
+                        value="divide"
+                        defaultChecked = {false}
+                        onChange = {this.changeHandler}
+                      />
+                      <label htmlFor="divideLeft"> divide
+                    </label>
+                    <label>
+                      <input
+                        style={{width: 30}}
+                        name="amount"
+                        type= "number" />
+                    </label>
+                    <button
+                      className ="leftBtn"
+                      name="left"
+                      disabled = {this.state.mulOrDiv}
+                      >Go</button>
+                  </form>
+                </td>
+                </tr>
+                <tr>
+                  <table>
+                    <thead>
+                        <tr>
+                        <th className = "leftVis center-align">Left Expression</th>
+                        <th className="eq"> = </th>
+                        <th className = "rightVis center-align">Right Expression</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                          <td className = "leftVis center-align">
+                            <button
+                                className="waves-effect waves-light #2196f3 blue leftBtn"
+                                name="left"
+                                onClick={this.singleClick}
+                                value={'addCo'}
+                                >+{this.props.equation.var}</button>
+                                <span>Variable:</span>
+                            <button
+                                className="waves-effect waves-light #2196f3 blue leftBtn"
+                                name="left"
+                                onClick={this.singleClick}
+                                value={'subCo'}
+                                >-{this.props.equation.var}</button>
+                          </td>
+                          <td className="eq" />
+                          <td className = "rightVis center-align">
+                            <button
+                                name="right"
+                                className="waves-effect waves-light #2196f3 blue rightBtn"
+                                onClick={this.singleClick}
+                                value={'addCo'}
+                                >+{this.props.equation.var}</button>
+                                <span>Variable:</span>
+                            <button
+                                name="right"
+                                className="waves-effect waves-light #2196f3 blue rightBtn"
+                                onClick={this.singleClick}
+                                value={'subCo'}
+                                >-{this.props.equation.var}</button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className = "leftVis center-align">
+                              <button
+                                  name="left"
+                                  className="waves-effect waves-light #2196f3 blue leftBtn"
+                                  onClick={this.singleClick}
+                                  value={'addConst'}
+                                  >+1</button>
+                                  <span>Constant:</span>
+                              <button
+                                  name = "left"
+                                  className="waves-effect waves-light #2196f3 blue leftBtn"
+                                  onClick={this.singleClick}
+                                  value={'subConst'}
+                                  >-1</button>
+                          </td>
+                          <td className="eq" />
+                          <td className = "rightVis center-align">
 
-                          <input
-                            id="divideLeft"
-                            type="radio"
-                            name="multiplyOrDivide"
-                            value="divide"
-                            defaultChecked = {false}
-                            onChange = {this.changeHandler}
-                          />
-                          <label htmlFor="divideLeft"> divide
-                        </label>
-                        <label>
-                          <input
-                            style={{width: 30}}
-                            name="amount"
-                            type= "number" />
-                      </label>
-                      <button>Go</button>
-                      </form>
-                    </td>
-                    <td className="eq" />
-                    <td className = "rightVis center-align">
-                    <form
-                          name= "right"
-                          onSubmit = {this.submitHandler}>
+                              <button
+                                  name="right"
+                                  className="waves-effect waves-light #2196f3 blue rightBtn"
+                                  onClick={this.singleClick}
+                                  value={'addConst'}
+                                  >+1</button>
+                                  <span>Constant:</span>
+                              <button
+                                  name="right"
+                                  className="waves-effect waves-light #2196f3 blue rightBtn"
+                                  onClick={this.singleClick}
+                                  value={'subConst'}
+                                  >-1</button>
+                          </td>
+                        </tr>
+                    </tbody>
+                  </table>
+                </tr>
 
-                          <input
-                            id="multiplyRight"
-                            type="radio"
-                            name="multiplyOrDivide"
-                            value = "multiply"
-                            defaultChecked = {true}
-                            onChange = {this.changeHandler}
-                          />
-                           <label htmlFor="multiplyRight"> multiply
-                        </label>
-
-                          <input
-                            id="divideRight"
-                            type="radio"
-                            name="multiplyOrDivide"
-                            value="divide"
-                            defaultChecked = {false}
-                            onChange = {this.changeHandler}
-                          />
-                          <label htmlFor="divideRight"> divide
-                        </label>
-                        <label>
-                          <input
-                            style={{width: 30}}
-                            name="amount"
-                            type= "number" />
-                      </label>
-                      <button>Go</button>
-                      </form>
-                    </td>
-                  </tr>
-          </tbody>
-      </table>
+              </tbody>
+            </table>
           </div>
           <div>
               <button onClick={this.resetHandler}>Reset</button>

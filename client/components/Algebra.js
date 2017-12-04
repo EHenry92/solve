@@ -6,47 +6,42 @@ export function Algebra (props){
         return (
         <div id="algebra">
           <table>
-            {/* <tbody> */}
-                {
-                  props.steps.map((step) => {
-                  return (
-                        // {displayStep(step)}
-                        <tbody key={step.id}>
-                        {showAction(step.pos, step.operation, step.change, step.var)}
-                        <tr>
-                        {
-                          step.lCo !== 0 &&
-                          <td>{step.lCo + step.var}</td>
-                        }
-                                                {
-                          step.lConst !== 0 &&
-                            <td> + </td>
-                        }
-                        {
-                          step.lConst !== 0 &&
-                            <td>{step.lConst}</td>
-                        }
-                        <td>  =  </td>
-                        {
-                          step.rCo !== 0 &&
-                            <td>{step.rCo + step.var}</td>
-                        }
-                        {
-                          step.rConst !== 0 &&
-                            <td> + </td>
-                        }
-                                                {
-                          step.rConst !== 0 &&
-                            <td>{step.rConst}</td>
-                        }
-                        </tr>
-                        </tbody>
-
-
-                  )
-                })
-              }
-            {/* </tbody> */}
+          {
+              props.steps.map((step) => {
+              return (
+                  <tbody key={step.id}>
+                  {showAction(step.pos, step.operation, step.change, step.var)}
+                  <tr>
+                  {
+                    step.lCo !== 0 &&
+                    <td>{step.lCo + step.var}</td>
+                  }
+                  {
+                    step.lConst !== 0 &&
+                      <td> + </td>
+                  }
+                  {
+                    step.lConst !== 0 &&
+                      <td>{step.lConst}</td>
+                  }
+                  <td>  =  </td>
+                  {
+                    step.rCo !== 0 &&
+                      <td>{step.rCo + step.var}</td>
+                  }
+                  {
+                    step.rConst !== 0 &&
+                      <td> + </td>
+                  }
+                  {
+                    step.rConst !== 0 &&
+                      <td>{step.rConst}</td>
+                  }
+                  </tr>
+                  </tbody>
+              )
+            })
+          }
           </table>
         </div>
         )
@@ -73,28 +68,28 @@ export function Algebra (props){
             return (
               <tr style={{borderBottom: '2'}}>
               {
-                position == 'lCo' ?
+                position == 'Co' ?
                     <td>{sign}{value}{variable}</td>
                     :
                     <td/>
               }
                 <td />
                 {
-                position == 'lConst' ?
+                position == 'Const' ?
                     <td>{sign}{value}</td>
                     :
                     <td/>
               }
                 <td />
                 {
-                position == 'rCo' ?
+                position == 'Co' ?
                     <td>{sign}{value}{variable}</td>
                     :
                     <td/>
               }
                 <td />
                 {
-                position == 'rConst' ?
+                position == 'Const' ?
                     <td>{sign}{value}</td>
                     :
                     <td/>
@@ -102,62 +97,8 @@ export function Algebra (props){
               </tr>
             )
           }
-
         }
-    // function displayStep(step)  {
-    //   return (
-    //     // <div>
-    //     //   {
-    //     //     step.lCo !== 0 &&
-    //     //     <span>{step.lCo + step.var}</span>
-    //     //   }
-    //     //   {
-    //     //     step.lConst !== 0 &&
-    //     //     <span>
-    //     //       <span> + </span>
-    //     //       <span>{step.lConst}</span>
-    //     //     </span>
-    //     //   }
-    //     //   <span>  =  </span>
-    //     //   {
-    //     //     step.rCo !== 0 &&
-    //     //       <span>{step.rCo + step.var}</span>
-    //     //   }
-    //     //   {
-    //     //     step.rConst !== 0 &&
-    //     //     <span>
-    //     //       <span> + </span>
-    //     //       <span>{step.rConst}</span>
-    //     //     </span>
-    //     //   }
-    //     //   </div>
-    //     <tr>
-    //     {
-    //       step.lCo !== 0 &&
-    //       <td>{step.lCo + step.var}</td>
-    //     }
-    //     {
-    //       step.lConst !== 0 &&
-    //       <td>
-    //         <td> + </td>
-    //         <td>{step.lConst}</td>
-    //       </td>
-    //     }
-    //     <td>  =  </td>
-    //     {
-    //       step.rCo !== 0 &&
-    //         <td>{step.rCo + step.var}</td>
-    //     }
-    //     {
-    //       step.rConst !== 0 &&
-    //       <td>
-    //         <td> + </td>
-    //         <td>{step.rConst}</td>
-    //       </td>
-    //     }
-    //     </tr>
-    //   )
-    // }
+
 }
 const mapStateToProps = ({ steps}) => ({lastStep: steps.lastStep, steps: steps.list});
 const mapDispatchToProps = {fetchSteps};
