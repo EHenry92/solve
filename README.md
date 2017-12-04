@@ -79,5 +79,12 @@ When you're ready to deploy
 
 Now, you should be deployed!
 
+Built With:
+  PostgreSQL- Database management system
+  Sequelize -
+  React- JavaScript interface library
+  Express -
+  Materalize - CSS framework
+
 Solve Developer:
   Evlis Henry
