@@ -1,4 +1,5 @@
-import React, {Component} from 'react';
+
+import React from 'react';
 
 export function expand (equation)  {
   let sign = ' ';

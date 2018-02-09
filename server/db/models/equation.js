@@ -16,17 +16,19 @@ const Equation = db.define('equation', {
   },
   rConst: {
     type: Sequelize.ARRAY(Sequelize.INTEGER)
+  },
+  solution: {
+    type: Sequelize.DECIMAL(10, 3)
   }
 })
 
 module.exports = Equation;
 
-/**
- * instanceMethods
- */
-/**
- * classMethods
- */
-/**
- * hooks
- */
+Equation.beforeCreate(equation => {
+  const reducer = (accumulator, currentValue) => accumulator + currentValue;
+  let lCo = equation.lCo.reduce(reducer),
+      rCo = equation.rCo.reduce(reducer),
+      lConst = equation.lConst.reduce(reducer),
+      rConst = equation.rConst.reduce(reducer);
+  equation.solution = (lConst - rConst) / (rCo - lCo);
+})

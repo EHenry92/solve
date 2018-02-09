@@ -19,15 +19,9 @@ export class Controls extends Component{
       this.resetHandler = this.resetHandler.bind(this);
     }
     componentWillMount()  {
-    //   $(document).ready(function() {
-    //     $('select').material_select();
-    //   });
       const eqId = this.props.id;
       this.props.fetchEquation(eqId);
       this.props.createStep(eqId);
-    //   $(document).ready(function() {
-    //     $('select').material_select();
-    //   });
     }
     singleClick(evt)  {
       evt.preventDefault();
@@ -77,10 +71,12 @@ export class Controls extends Component{
       <div id="controls">
           <div>
             <table>
-              <tbody>
+              <thead>
                 <tr>
                 <th>Equation Controls</th>
                 </tr>
+              </thead>
+              <tbody>
                 <tr>
                 <td style={{alignContent: 'center'}}>
                   <form
@@ -122,7 +118,8 @@ export class Controls extends Component{
                   </form>
                 </td>
                 </tr>
-                <tr>
+              </tbody>
+              </table>
                   <table>
                     <thead>
                         <tr>
@@ -201,10 +198,6 @@ export class Controls extends Component{
                         </tr>
                     </tbody>
                   </table>
-                </tr>
-
-              </tbody>
-            </table>
           </div>
           <div>
               <button onClick={this.resetHandler}>Reset</button>
@@ -215,6 +208,6 @@ export class Controls extends Component{
   }
 }
 
-const mapStateToProps = ({equations, steps}) => ({equation: equations.selected, lastStep: steps.lastStep});
+const mapStateToProps = ({equations, steps}) => ({equation: equations.selected});
 const mapDispatchToProps = {fetchEquation, postStep, createStep, destroySteps};
 export default connect(mapStateToProps, mapDispatchToProps)(Controls);

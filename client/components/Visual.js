@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {fetchEquation} from './index';
-import postStep from '../store/reducer';
+import postStep from '../store';
 import {connect} from 'react-redux';
 
 export function Visual (props){
@@ -13,19 +13,21 @@ export function Visual (props){
           <tbody>
             <tr>
             <td className="leftVis leftSide">
-            {
+            {   props.equation &&
                 visualize(props.equation.lCo, 'variable', leftVariable, props.equation.var)
             }
-            {
+            {   props.equation &&
                 visualize(props.equation.lConst, 'constant', leftConstant)
             }
             </td>
             <td className="eq"> = </td>
             <td className="rightVis rightSide">
             {
+                props.equation &&
                 visualize(props.equation.rCo, 'variable', rightVariable, props.equation.var)
             }
             {
+                props.equation &&
                 visualize(props.equation.rConst, 'constant', rightConstant)
             }
             </td>
@@ -57,6 +59,6 @@ export function Visual (props){
     }
 }
 
-const mapStateToProps = ({equations, steps}) => ({equation: steps.lastStep, steps: steps.list, selected: equations.selected});
+const mapStateToProps = ({equations, steps}) => ({equation: steps.list[steps.list.length - 1], steps: steps.list, selected: equations.selected});
 const mapDispatchToProps = {fetchEquation, postStep};
 export default connect(mapStateToProps, mapDispatchToProps)(Visual);

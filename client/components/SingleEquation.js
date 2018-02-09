@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {fetchEquation} from './index';
-import postStep from '../store/reducer';
+import postStep from '../store';
 import Controls from './Controls';
 import Visual from './Visual';
 import Algebra from './Algebra';
@@ -46,5 +46,5 @@ export class SingleEquation extends Component {
 }
 
 const mapStateToProps = ({equations, steps}) => ({selected: equations.selected, steps: steps.list, lastStep: steps.lastStep});
-const mapDispatchToProps = {fetchEquation, postStep};
+const mapDispatchToProps = {fetchEquation};
 export default connect(mapStateToProps, mapDispatchToProps)(SingleEquation);
