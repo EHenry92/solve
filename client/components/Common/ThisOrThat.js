@@ -1,23 +1,23 @@
 import React from 'react';
 
-const ThisOrThat = ({text, leftButton, rightButton, onClick}) => {
+const ThisOrThat = ({type, text, leftButton, rightButton, onClick}) => {
     return (
       <div style={styles.containerStyle}>
-        <button
+        <input
           name = {leftButton.name}
           value = {leftButton.value}
           onClick = {onClick}
-        >
+          type = {type}
+        />
           {leftButton.text}
-        </button>
         <span>{text}</span>
-        <button
+        <input
+          type = {type}
           name = {rightButton.name}
           value = {rightButton.value}
           onClick = {onClick}
-          >
+          />
           {rightButton.text}
-        </button>
       </div>
     )
 }

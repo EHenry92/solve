@@ -78,28 +78,26 @@ export class Controls extends Component{
                             <ThisOrThat
                               text={'Variable'}
                               onClick={this.singleClick}
+                              type={'button'}
                               leftButton={{
-                                  text: `+${equation.var}`,
-                                  value: 1,
+                                  value: `+${equation.var}`,
                                   name: 'leftButton'
                                 }}
                               rightButton={{
-                                text: `-${equation.var}`,
-                                value: 1,
+                                value: `-${equation.var}`,
                                 name: 'rightButton'
                               }}
                               />
                               <ThisOrThat
                               text={'Constant'}
                               onClick={this.singleClick}
+                              type={'button'}
                               leftButton={{
-                                  text: '+1',
-                                  value: 1,
+                                  value: '+1',
                                   name: 'leftButton'
                                 }}
                               rightButton={{
-                                text: '-1',
-                                value: 1,
+                                value: '-1',
                                 name: 'rightButton'
                               }}
                               />
@@ -111,27 +109,23 @@ export class Controls extends Component{
             }
             </div>
             <form
-              name= "left"
+              name= "operation"
               onSubmit = {this.MulOrDivHandler}>
-                {
-                  ['multiply', 'divide'].map((op) => {
-                      return (
-                        <div key = {op}>
-                        <input
-                          id={`${op}Left`}
-                          type = "radio"
-                          name="multiplyOrDivide"
-                          value={`${op}`}
-                          defaultChecked={this.state.operation == op}
-                          onClick = {(evt) => {this.setState({operation: evt.target.value})}}
-                        />
-                        <label htmlFor={`${op}Left`}>
-                          {op}
-                        </label>
-                        </div>
-                      )
-                  })
-                }
+                <ThisOrThat
+                  text={''}
+                  onClick={(evt) => {this.setState({operation: evt.target.value})}}
+                  type={'radio'}
+                  leftButton={{
+                      text: 'multiply',
+                      name: 'multiplyOrDivide',
+                      value: 1
+                    }}
+                  rightButton={{
+                    text: 'divide',
+                    name: 'multiplyOrDivide',
+                    value: 1
+                  }}
+                />
                 <label>
                       <input
                         style={{width: 30}}
