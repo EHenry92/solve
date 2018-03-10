@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-import {fetchEquation} from './index';
-import postStep from '../store';
-import Controls from './Controls';
+import {fetchEquation} from '../store';
 import Visual from './Visual';
+import Controls from './Controls';
 import Algebra from './Algebra';
 import {expand} from '../../public/function.js';
 import {connect} from 'react-redux';

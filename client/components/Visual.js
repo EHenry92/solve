@@ -1,6 +1,5 @@
-import React, {Component} from 'react';
-import {fetchEquation} from './index';
-import postStep from '../store';
+import React from 'react';
+import {fetchEquation} from '../store';
 import {connect} from 'react-redux';
 import {Cube} from './Common';
 
@@ -74,5 +73,5 @@ export function Visual (props){
 }
 
 const mapStateToProps = ({equations, steps}) => ({equation: steps.list[steps.list.length - 1], steps: steps.list, selected: equations.selected});
-const mapDispatchToProps = {fetchEquation, postStep};
+const mapDispatchToProps = {fetchEquation};
 export default connect(mapStateToProps, mapDispatchToProps)(Visual);

@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {fetchSteps} from './index';
+import React from 'react';
+import {fetchSteps} from '../store';
 import {connect} from 'react-redux';
 
 export function Algebra (props){

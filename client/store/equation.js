@@ -36,6 +36,7 @@ export function fetchEquations () {
     .catch(err => err)
   }
 }
+
 export function fetchEquation(id) {
   return function thunk(dispatch) {
     axios.get(`/api/equations/${id}`)

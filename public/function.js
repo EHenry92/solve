@@ -8,6 +8,7 @@ export function expand (equation)  {
     <span>
             <span>
               {
+                equation.lCo &&
                 equation.lCo.map((co, idx) => {
                   if (co > 0 && idx !== 0) { sign = ' + '}
                   else {sign = ' '}
@@ -18,6 +19,7 @@ export function expand (equation)  {
                 })
               }
               {
+                equation.lConst &&
                 equation.lConst.map((num) => {
                   if (num > 0) {sign = ' + '}
                   else {sign = ' '}
@@ -31,6 +33,7 @@ export function expand (equation)  {
           <span>{space}={space}</span>
           <span>
               {
+                equation.rCo &&
                 equation.rCo.map((co, idx) => {
                   if (co > 0 && idx !== 0) { sign = ' + '}
                   else {sign = ' '}
@@ -41,6 +44,7 @@ export function expand (equation)  {
                 })
               }
               {
+                equation.rConst &&
                 equation.rConst.map(num => {
                   if (num > 0) {sign = ' + '}
                   else {sign = ' '}

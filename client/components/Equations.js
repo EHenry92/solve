@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { NavLink } from 'react-router-dom';
-import {fetchEquations} from './index';
+import {fetchEquations} from '../store';
 import {expand} from '../../public/function.js';
 import {connect} from 'react-redux';
 import {Cube} from './Common';

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {fetchEquation, postStep, createStep, destroySteps} from './index';
+import {fetchEquation, postStep, createStep, destroySteps} from '../store';
 
 
 export class Controls extends Component{

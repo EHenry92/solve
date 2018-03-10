@@ -4,8 +4,9 @@
  * having to figure out which file they belong to!
  */
 export {default as Main} from './main';
-export * from '../store/index.js'
+// export * from '../store/index.js';
 export {Visual} from './Visual';
 export {Algebra} from './Algebra';
 export {Controls} from './Controls';
+export {NavBar} from './NavBar';
 

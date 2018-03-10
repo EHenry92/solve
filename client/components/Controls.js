@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {fetchEquation, postStep, createStep, destroySteps} from './index';
+import {fetchEquation, postStep, createStep, destroySteps} from '../store';
 import {ThisOrThat, PopOverlay} from './Common/index';
+import {expand} from '../../public/function.js';
+import Algebra from './Algebra';
+import history from '../history';
 
 
 export class Controls extends Component{
@@ -9,6 +12,7 @@ export class Controls extends Component{
       super(props);
       this.state = {
        operation: 'multiply',
+       showEnd: true
       }
       this.singleClick = this.singleClick.bind(this);
       this.MulOrDivHandler = this.MulOrDivHandler.bind(this);
@@ -36,15 +40,18 @@ export class Controls extends Component{
       return (
       <div id="controls">
         {
-          this.props.complete &&
+          (this.props.complete && this.state.showEnd) &&
           <PopOverlay
               closeText={'Close'}
-              onClick={() => {}}
+              onClose={() => {history.push('/equations')}}
               headerText={'Solve'}
               >
-              <div>Woot ! Woot ! you Won!!</div>
+              <div>{expand(this.props.equation)}</div>
+              <Algebra />
           </PopOverlay>
         }
+        {
+          !this.props.complete &&
         <div>
           <div style={{display: 'flex', flexDirection: 'row'}}>
           {
@@ -97,8 +104,12 @@ export class Controls extends Component{
                 >Go</button>
           </form>
         </div>
+        }
         <div>
-            <button onClick={() => {this.props.createStep(id)}}>Reset</button>
+            <button onClick={() => {
+              this.props.createStep(id)
+              }}
+              >Reset</button>
             <button>Solution</button>
         </div>
       </div>
