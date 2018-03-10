@@ -7,15 +7,9 @@ import Algebra from './Algebra';
 import {expand} from '../../public/function.js';
 import {connect} from 'react-redux';
 
-export class SingleEquation extends Component {
-
-    // componentWillMount()    {
-    //     const eqId = this.props.match.params.id;
-    //     this.props.fetchEquation(eqId);
-    // }
-    render ()   {
-        const equation = this.props.selected;
-        let expanded, warning;
+const SingleEquation = (props) => {
+        const equation = props.selected;
+        let expanded;
         if (Object.keys(equation).length !== 0)  {
             expanded = expand(equation);
         }
@@ -25,24 +19,18 @@ export class SingleEquation extends Component {
                 <div className = "center-align">
                    <h3> {expanded} </h3>
                 </div>
-                <div>Messages:
-                  <span> {warning}
-                    </span>
-                  </div>
                 <Controls
-                  id = {this.props.match.params.id}
+                  id = {props.match.params.id}
                 />
             </div>
             <div>
              <div id="box">
-                        <Visual />
-                        <Algebra />
-                     </div>
-
+                <Visual />
+                <Algebra />
+              </div>
             </div>
         </div>
         )
-    }
 }
 
 const mapStateToProps = ({equations, steps}) => ({selected: equations.selected, steps: steps.list, lastStep: steps.lastStep});

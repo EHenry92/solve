@@ -75,7 +75,7 @@ export const postStep = ( operation, num, solution, pos) => {
         dispatch(addStep(nextStep));
     }
     else {
-      dispatch()
+      dispatch(solveEquation(nextStep))
     }
   }
 }

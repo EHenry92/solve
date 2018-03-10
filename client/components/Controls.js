@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {fetchEquation, postStep, createStep, destroySteps} from './index';
-import {ThisOrThat} from './Common/index';
+import {ThisOrThat, PopOverlay} from './Common/index';
 
 
 export class Controls extends Component{
@@ -35,6 +35,16 @@ export class Controls extends Component{
       const {equation, id} = this.props;
       return (
       <div id="controls">
+        {
+          this.props.complete &&
+          <PopOverlay
+              closeText={'Close'}
+              onClick={() => {}}
+              headerText={'Solve'}
+              >
+              <div>Woot ! Woot ! you Won!!</div>
+          </PopOverlay>
+        }
         <div>
           <div style={{display: 'flex', flexDirection: 'row'}}>
           {
@@ -96,7 +106,7 @@ export class Controls extends Component{
   }
 }
 
-const mapStateToProps = ({equations}) => ({equation: equations.selected});
+const mapStateToProps = ({equations, steps}) => ({equation: equations.selected, complete: steps.solved});
 const mapDispatchToProps = {fetchEquation, postStep, createStep, destroySteps};
 export default connect(mapStateToProps, mapDispatchToProps)(Controls);
 

@@ -54,23 +54,21 @@ export function Visual (props){
         }
         const amount = Math.abs(number);
         for (var i = 0;i < amount; i++)  {
-            if (type == 'constant'){
+            // if (type == 'constant'){
               array.push(
                 <div className={type} key={i + type}>{value}</div>
 
               )
-            }
-            else {
-              array.push(
-                <div className={type} key={i + type}>
-                  <Cube className={type} text={value} fontSize={15} />
-                </div>
-              )
-            }
+            // }
+            // else {
+            //   array.push(
+            //     <div className={type} key={i + type}>
+            //       <Cube className={type} text={value} fontSize={15} />
+            //     </div>
+            //   )
+            // }
 
       }
-            console.log(amount, array)
-
         return array;
     }
 }

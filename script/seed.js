@@ -19,7 +19,8 @@ const list = [
 	{var: 'x', lCo: [4], lConst: [2], rCo: [6], rConst: [-2], answer: 0},
 	{var: 'y', lCo: [3, 2], lConst: [4], rCo: [8], rConst: [14], answer: -2},
   {var: 'x', lCo: [5], lConst: [3], rCo: [2, 4], rConst: [7], answer: -4},
-  {var: 'x', lCo: [8], lConst: [3], rCo: [3, 4], rConst: [8], answer: 5}
+  {var: 'x', lCo: [8], lConst: [3], rCo: [3, 4], rConst: [8], answer: 5},
+  {var: 'z', lCo: [1], lConst: [2], rCo: [0], rConst: [4], answer: 2}
 
 ];
 
