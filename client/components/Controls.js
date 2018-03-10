@@ -9,11 +9,7 @@ export class Controls extends Component{
       super(props);
       this.state = {
        operation: 'multiply',
-       leftSide: false,
-       rightSide: false,
-       mulOrDiv: false
       }
-      this.preserveBalance = this.preserveBalance.bind(this);
       this.singleClick = this.singleClick.bind(this);
       this.MulOrDivHandler = this.MulOrDivHandler.bind(this);
     }
@@ -24,131 +20,83 @@ export class Controls extends Component{
     }
     singleClick(evt)  {
       evt.preventDefault();
-      const operation = evt.target.value.slice(0, 3);
-      const column = evt.target.value.slice(3);
-      const side = evt.target.name;
-      this.preserveBalance(side, operation, 1, column);
-
+      const {name, value} = evt.target;
+      let pos = name === 'x' ? 'Co' : 'Const';
+      let operation = value === '+' ? 'add' : 'sub';
+      this.props.postStep(operation, 1, this.props.equation.solution,  pos);
     }
     MulOrDivHandler(evt)  {
       evt.preventDefault();
-      const operation = evt.target.multiplyOrDivide.value;
-      const amount = evt.target.amount.value;
-      const side = evt.target.name;
-      this.props.postStep(side, operation, amount);
+      this.props.postStep(this.state.operation, evt.target.amount.value, this.props.equation.solution)
     }
 
 
-    preserveBalance(side, operation, amount, column) {
-      let buttons = document.getElementsByClassName(side + 'Btn');
-      for (var i = 0; i < buttons.length; i++) {
-        buttons[i].disabled = true;
-      }
-      let sendStep = () => {
-        if (this.state.leftSide && this.state.rightSide) {
-          this.props.postStep(column, operation, amount);
-          this.setState({leftSide: true, rightSide: true }, () => {
-            document.getElementsByClassName('leftBtn rightBtn')
-          })
-        }
-      }
-      side == 'left' ? this.setState({leftSide: true, mulOrDiv: true}, sendStep) : this.setState({rightSide: true, mulOrDiv: true}, sendStep)
-
-    }
     render () {
       const {equation, id} = this.props;
       return (
       <div id="controls">
-          <div>
-            <div>Equation Controls</div>
-            <div style={{display: 'flex', flexDirection: 'row'}}>
-            {
-              ['Left', 'Right'].map(side =>
-                    (<table  key={side} className= {`${side}side`}>
-                      <thead>
-                        <tr>
-                          <th className = {`${side}Vis`}>
-                            {side} Expression
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td className={`${side}Vis`}>
-                            <ThisOrThat
-                              text={'Variable'}
-                              onClick={this.singleClick}
-                              type={'button'}
-                              leftButton={{
-                                  value: `+${equation.var}`,
-                                  name: 'leftButton'
-                                }}
-                              rightButton={{
-                                value: `-${equation.var}`,
-                                name: 'rightButton'
-                              }}
-                              />
-                              <ThisOrThat
-                              text={'Constant'}
-                              onClick={this.singleClick}
-                              type={'button'}
-                              leftButton={{
-                                  value: '+1',
-                                  name: 'leftButton'
-                                }}
-                              rightButton={{
-                                value: '-1',
-                                name: 'rightButton'
-                              }}
-                              />
-                          </td>
-                        </tr>
-                      </tbody>
-                      </table>)
-              )
-            }
-            </div>
-            <form
-              name= "operation"
-              onSubmit = {this.MulOrDivHandler}>
-                <ThisOrThat
-                  text={''}
-                  onClick={(evt) => {this.setState({operation: evt.target.value})}}
-                  type={'radio'}
-                  leftButton={{
-                      text: 'multiply',
-                      name: 'multiplyOrDivide',
-                      value: 1
+        <div>
+          <div style={{display: 'flex', flexDirection: 'row'}}>
+          {
+            [`${equation.var}`, '1'].map(term => (
+                <div key={term}>
+                  <ThisOrThat
+                    text= {term}
+                    onClick={this.singleClick}
+                    type={'button'}
+                    leftButton={{
+                        value: `+`,
+                        name: term
+                      }}
+                    rightButton={{
+                      value: `-`,
+                      name: term
                     }}
-                  rightButton={{
-                    text: 'divide',
+                  />
+                </div>
+            ))
+          }
+          </div>
+          <form
+            name= "operation"
+            onSubmit = {this.MulOrDivHandler}>
+              <ThisOrThat
+                text={''}
+                onClick={(evt) => {this.setState({operation: evt.target.value})}}
+                type={'radio'}
+                leftButton={{
+                    text: 'multiply',
                     name: 'multiplyOrDivide',
-                    value: 1
+                    value: 'multiply'
                   }}
-                />
-                <label>
-                      <input
-                        style={{width: 30}}
-                        name="amount"
-                        type= "number" />
-                    </label>
-            <button
-              className ="leftBtn"
-              name="left"
-              disabled = {this.state.mulOrDiv}
-              >Go</button>
+                rightButton={{
+                  text: 'divide',
+                  name: 'multiplyOrDivide',
+                  value: 'divide'
+                }}
+              />
+              <label>
+                <input
+                  style={{width: 30}}
+                  name="amount"
+                  type= "number" />
+              </label>
+              <button
+                className ="leftBtn"
+                name="left"
+                >Go</button>
           </form>
-          </div>
-          <div>
-              <button onClick={() => {this.props.createStep(id)}}>Reset</button>
-              <button>Solution</button>
-          </div>
+        </div>
+        <div>
+            <button onClick={() => {this.props.createStep(id)}}>Reset</button>
+            <button>Solution</button>
+        </div>
       </div>
       )
   }
 }
 
-const mapStateToProps = ({equations, steps}) => ({equation: equations.selected});
+const mapStateToProps = ({equations}) => ({equation: equations.selected});
 const mapDispatchToProps = {fetchEquation, postStep, createStep, destroySteps};
 export default connect(mapStateToProps, mapDispatchToProps)(Controls);
 

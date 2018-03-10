@@ -4,23 +4,28 @@ import axios from 'axios';
 let initialState = {
   list: [],
   lastStep: {},
-  partialStep: {}
+  solved: false
 }
 
 const GET_STEPS = 'GET_STEPS';
 const ADD_STEP = 'ADD_STEP';
-const GET_HALF_STEP = 'GET_HALF_STEP ';
 const RESET_STEPS = 'RESET_STEPS';
 const FIRST_STEP = 'FIRST_STEP';
-const GET_LAST_STEP = 'GET_LAST_STEP'
+const GET_LAST_STEP = 'GET_LAST_STEP';
+const SOLVE_EQUATION = 'SOLVE_EQUATION';
 
 export const getSteps = (steps) => ({type: GET_STEPS, steps});
 export const addStep = (step) => ({type: ADD_STEP, step});
-export const addPartialStep = (step) => ({type: ADD_STEP, step});
 export const getStep = (step) => ({type: GET_LAST_STEP, step});
 export const resetSteps = () => ({type: RESET_STEPS });
 export const firstStep = (step) => ({type: FIRST_STEP, step});
+export const solveEquation = (step) => ({type: SOLVE_EQUATION, step});
 
+
+const checkComplete = (step, solution) => {
+    return ((step.lCo == 1 && step.rConst == solution) ||
+            (step.rCo == 1 && step.lConst == solution))
+}
 export function createStep (id) {
   return function thunk (dispatch)  {
     axios.get(`/api/equations/${id}`)
@@ -42,22 +47,8 @@ export function createStep (id) {
   }
 }
 
-export function postPartialStep (pos, operation) {
-    return function thunk(dispatch) {
-      let halfStep = Object.assign({}, store.getState().steps.lastStep, {pos, operation});
-      halfStep.id += 1;
-      if (operation === 'add') {
-          halfStep[pos] += 1;
-          halfStep.change = 1;
-      }
-      else if (operation === 'sub') {
-          halfStep[pos] -= 1;
-          halfStep.change = -1
-      }
-      dispatch(addPartialStep(halfStep));
-    }
-}
-export const postStep = (pos, operation, num) => {
+
+export const postStep = ( operation, num, solution, pos) => {
   return function thunk (dispatch)  {
     let nextStep = Object.assign({}, store.getState().steps.lastStep, {pos, operation});
     nextStep.id += 1;
@@ -77,10 +68,15 @@ export const postStep = (pos, operation, num) => {
     }
     else {
       nextStep.change = operation == 'add' ? 1 : -1;
-      nextStep['l' + pos] += 1;
-      nextStep['r' + pos] += 1;
+      nextStep['l' + pos] += nextStep.change;
+      nextStep['r' + pos] += nextStep.change;
     }
-    dispatch(addStep(nextStep));
+    if (!checkComplete(nextStep, solution)) {
+        dispatch(addStep(nextStep));
+    }
+    else {
+      dispatch()
+    }
   }
 }
 
@@ -93,15 +89,16 @@ export default function reducer (state = initialState, action)  {
   switch (action.type) {
     case GET_STEPS:
       return action.steps
+    case SOLVE_EQUATION:
+    return Object.assign({}, state.steps, {
+      list: [...state.list, action.step],
+      lastStep: action.step,
+      solved: true
+    })
     case ADD_STEP:
       return Object.assign({}, state.steps, {
         list: [...state.list, action.step],
-        partialStep: {},
         lastStep: action.step
-      })
-      case GET_HALF_STEP:
-      return Object.assign({}, state.steps, {
-        partialStep: action.step
       })
     case FIRST_STEP:
       return Object.assign({}, state.steps, {
@@ -111,7 +108,7 @@ export default function reducer (state = initialState, action)  {
     case RESET_STEPS:
       return Object.assign({}, state.steps, {
         list: [],
-        partialStep: {}
+        solved: false
       })
     default:
       return state;

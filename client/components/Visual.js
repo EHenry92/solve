@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {fetchEquation} from './index';
 import postStep from '../store';
 import {connect} from 'react-redux';
+import {Cube} from './Common';
 
 export function Visual (props){
         let leftVariable = [];
@@ -53,8 +54,23 @@ export function Visual (props){
         }
         const amount = Math.abs(number);
         for (var i = 0;i < amount; i++)  {
-            array.push( <div className={type} key={number + i}>{value}</div>)
+            if (type == 'constant'){
+              array.push(
+                <div className={type} key={i + type}>{value}</div>
+
+              )
             }
+            else {
+              array.push(
+                <div className={type} key={i + type}>
+                  <Cube className={type} text={value} fontSize={15} />
+                </div>
+              )
+            }
+
+      }
+            console.log(amount, array)
+
         return array;
     }
 }

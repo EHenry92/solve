@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import {fetchEquations} from './index';
 import {expand} from '../../public/function.js';
 import {connect} from 'react-redux';
+import {Cube} from './Common';
 
 
 export class Equations extends Component {
@@ -25,6 +26,7 @@ export class Equations extends Component {
                 })
               }
               </ul>
+              <Cube text={'X'} fontSize={12} />
             </div>
         )
     }
