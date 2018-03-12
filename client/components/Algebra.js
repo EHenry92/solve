@@ -71,28 +71,28 @@ export function Algebra (props){
                 position == 'Co' ?
                     <td>{sign}{value}{variable}</td>
                     :
-                    <td/>
+                    <td />
               }
                 <td />
                 {
                 position == 'Const' ?
                     <td>{sign}{value}</td>
                     :
-                    <td/>
+                    <td />
               }
                 <td />
                 {
                 position == 'Co' ?
                     <td>{sign}{value}{variable}</td>
                     :
-                    <td/>
+                    <td />
               }
                 <td />
                 {
                 position == 'Const' ?
                     <td>{sign}{value}</td>
                     :
-                    <td/>
+                    <td />
               }
               </tr>
             )
@@ -103,14 +103,3 @@ export function Algebra (props){
 const mapStateToProps = ({ steps}) => ({lastStep: steps.lastStep, steps: steps.list});
 const mapDispatchToProps = {fetchSteps};
 export default connect(mapStateToProps, mapDispatchToProps)(Algebra);
-
-
-// //place an actions on this state that keeps track of the actions performed, and dispalys a list
-// //if changed, change the color to red?
-
-
-/*
-Is the answer:
-  if( (equation.lCo * equation.answer + equation.lConst) === (equation.rCo * equation.answer + equation.rConst))
-    warning = "Correct ! x=" + equation.answer
-*/
